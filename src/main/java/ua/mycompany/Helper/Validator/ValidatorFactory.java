@@ -17,8 +17,6 @@ public final class ValidatorFactory {
                 return new PhoneValidator();
             case "date":
                 return new DateValidator();
-            case "course":
-                return new CourseValidator();
         }
         throw new IllegalArgumentException();
     }

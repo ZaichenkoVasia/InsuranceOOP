@@ -19,9 +19,7 @@ public class ConsoleApplication {
     }
 
     public static void main(String[] args) {
-
-        ApplicationContext ctx =
-                new AnnotationConfigApplicationContext("ua.mycompany");
+        ApplicationContext ctx = new AnnotationConfigApplicationContext("ua.mycompany");
         ConsoleApplication main = ctx.getBean(ConsoleApplication.class);
         main.menu.run();
         main.studentViewInfo.run();

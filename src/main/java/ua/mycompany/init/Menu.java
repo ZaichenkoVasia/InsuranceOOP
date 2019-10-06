@@ -3,7 +3,6 @@ package ua.mycompany.init;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.mycompany.domain.Address;
-import ua.mycompany.domain.Department;
 import ua.mycompany.domain.Student;
 import ua.mycompany.service.StudentService;
 
@@ -19,17 +18,13 @@ public class Menu {
     }
 
     public void run() {
-        Department department = new Department(1L, "Dep1");
 
         Student student1 = Student.builder()
                 .withName("Name")
                 .withSurname("Surname")
                 .withBirthday(LocalDate.of(2002, 4, 4))
                 .withAddress(new Address("city", "street", 10))
-                .withDepartment(department)
                 .withPhoneNumber("380444747474")
-                .withGroup("AA-11")
-                .withCourse(1)
                 .withEmail("dsadas@gmail.com")
                 .withPassword("1111")
                 .build();
@@ -39,10 +34,7 @@ public class Menu {
                 .withSurname("Shevchenko")
                 .withBirthday(LocalDate.of(1999, 3, 3))
                 .withAddress(new Address("Kyiv", "Lviv", 2))
-                .withDepartment(department)
                 .withPhoneNumber("380444743334")
-                .withGroup("AA-22")
-                .withCourse(4)
                 .withEmail("email@gmail.com")
                 .withPassword("2222")
                 .build();
@@ -52,10 +44,7 @@ public class Menu {
                 .withSurname("King")
                 .withBirthday(LocalDate.of(1999, 3, 23))
                 .withAddress(new Address("Kyiv", "street", 12))
-                .withDepartment(department)
                 .withPhoneNumber("380444744444")
-                .withGroup("AA-22")
-                .withCourse(4)
                 .withEmail("tomking@gmail.com")
                 .withPassword("3333")
                 .build();
