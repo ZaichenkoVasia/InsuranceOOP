@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import ua.mycompany.Helper.Utility.UTF8Control;
 import ua.mycompany.Helper.Validator.ValidatorFactory;
 import ua.mycompany.Helper.sort.BubbleSort;
-import ua.mycompany.controller.StudentController;
-import ua.mycompany.domain.Student;
+import ua.mycompany.controller.CustomerController;
+import ua.mycompany.domain.Customer;
 
 //import javax.validation.ConstraintViolation;
 import java.time.LocalDate;
@@ -14,15 +14,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Component
-public class StudentViewInfo {
+public class CustomerViewInfo {
 
-    private StudentController studentController;
+    private CustomerController customerController;
     private ResourceBundle lang;
     private Scanner in = new Scanner(System.in);
 
     @Autowired
-    public StudentViewInfo(StudentController studentController) {
-        this.studentController = studentController;
+    public CustomerViewInfo(CustomerController customerController) {
+        this.customerController = customerController;
     }
 
     public void run() {
@@ -57,10 +57,10 @@ public class StudentViewInfo {
     private void menu() {
 
         System.out.println(lang.getString("menu"));
-        System.out.println("1 - " + lang.getString("viewStudent"));
-        System.out.println("2 - " + lang.getString("addStudent"));
-        System.out.println("3 - " + lang.getString("sortStudent"));
-        System.out.println("4 - " + lang.getString("loginStudent"));
+        System.out.println("1 - " + lang.getString("viewCustomer"));
+        System.out.println("2 - " + lang.getString("addCustomer"));
+        System.out.println("3 - " + lang.getString("sortCustomer"));
+        System.out.println("4 - " + lang.getString("loginCustomer"));
         System.out.println("5 - " + lang.getString("inputId"));
 //        System.out.println("6 - " + lang.getString("inputIdDepartment"));
 //        System.out.println("7 - " + lang.getString("inputGroup"));
@@ -77,28 +77,28 @@ public class StudentViewInfo {
 
         switch (choice) {
             case 1:
-                printAllUsers(studentController.findAll());
+                printAllCustomers(customerController.findAll());
                 break;
             case 2:
-                createUserFromConsole();
+                createCustomerFromConsole();
                 break;
             case 3:
-                sortUser();
+                sortCustomer();
                 break;
             case 4:
-                System.out.println(loginStudent());
+                System.out.println(loginCustomer());
                 break;
             case 5:
                 System.out.println(findById());
                 break;
 //            case 6:
-//                printAllUsers(findByDepartment());
+//                printAllCustomers(findByDepartment());
 //                break;
 //            case 7:
-//                printAllUsers(findByGroup());
+//                printAllCustomers(findByGroup());
 //                break;
 //            case 8:
-//                printAllUsers(findByDepartmentAndCourse());
+//                printAllCustomers(findByDepartmentAndCourse());
 //                break;
             case 9:
                 chooseMenuLang();
@@ -106,33 +106,33 @@ public class StudentViewInfo {
         }
         menu();
     }
-    private void printAllUsers(ArrayList<Student> students) {
-        if (students.isEmpty()) {
-            System.out.println(lang.getString("noStudentYet"));
+    private void printAllCustomers(ArrayList<Customer> customers) {
+        if (customers.isEmpty()) {
+            System.out.println(lang.getString("noCustomerYet"));
         } else {
-            System.out.println("\n" + lang.getString("listStudent"));
-            for (Student student : students
+            System.out.println("\n" + lang.getString("listCustomer"));
+            for (Customer customer : customers
             ) {
-                System.out.println(student);
+                System.out.println(customer);
             }
             System.out.println();
         }
     }
 
-    private void createUserFromConsole() {
+    private void createCustomerFromConsole() {
 
         String name = writeFieldValidator("name");
         String surname = writeFieldValidator("surname");
         String email = writeFieldValidator("email");
         String phoneNumber = writeFieldValidator("phoneNumber");
         String birthday = writeFieldValidator("date");
-//        System.out.println(lang.getString("groupStudent"));
+//        System.out.println(lang.getString("groupCustomer"));
 //        String group = in.nextLine();
 //        int course = Integer.parseInt(writeFieldValidator("course"));
-        System.out.println(lang.getString("passwordStudent"));
+        System.out.println(lang.getString("passwordCustomer"));
         String password = in.nextLine();
 
-        Student student = Student.builder()
+        Customer customer = Customer.builder()
                 .withName(name)
                 .withSurname(surname)
                 .withBirthday(splitBirthday(birthday))
@@ -140,8 +140,8 @@ public class StudentViewInfo {
                 .withEmail(email)
                 .withPassword(password)
                 .build();
-        studentController.register(student);
-        System.out.println(lang.getString("studentCreated") + "\n");
+        customerController.register(customer);
+        System.out.println(lang.getString("customerCreated") + "\n");
 
         menu();
     }
@@ -151,14 +151,14 @@ public class StudentViewInfo {
         return LocalDate.parse(birthday, formatter);
     }
 
-    private void sortUser() {
-        System.out.println(lang.getString("usersAreSorted") + "\n");
-        printAllUsers(BubbleSort.sort(studentController.findAll()));
+    private void sortCustomer() {
+        System.out.println(lang.getString("customersAreSorted") + "\n");
+        printAllCustomers(BubbleSort.sort(customerController.findAll()));
     }
 
     private String writeFieldValidator(String nameField) {
 
-        String key = nameField + "Student";
+        String key = nameField + "Customer";
         System.out.println(lang.getString(key));
         String fieldInput = in.nextLine();
         if (!ValidatorFactory.getValidator(nameField).validate(fieldInput)) {
@@ -168,38 +168,38 @@ public class StudentViewInfo {
         return fieldInput;
     }
 
-    private Student findById(){
+    private Customer findById(){
         System.out.println(lang.getString("inputId"));
-        return studentController.findById(in.nextLong());
+        return customerController.findById(in.nextLong());
     }
 //
-//    private ArrayList<Student> findByDepartment(){
+//    private ArrayList<Customer> findByDepartment(){
 //        System.out.println(lang.getString("inputIdDepartment"));
-//        return studentController.findByDepartment(in.nextLong());
+//        return CustomerController.findByDepartment(in.nextLong());
 //    }
 //
-//    private ArrayList<Student> findByGroup(){
+//    private ArrayList<Customer> findByGroup(){
 //        System.out.println(lang.getString("inputGroup"));
 //        String group = in.nextLine();
 //        group = in.nextLine();
-//        return studentController.findByGroup(group);
+//        return CustomerController.findByGroup(group);
 //    }
 //
-//    private ArrayList<Student> findByDepartmentAndCourse(){
+//    private ArrayList<Customer> findByDepartmentAndCourse(){
 //        System.out.println(lang.getString("inputIdDepartment"));
 //        Long idDepartment = in.nextLong();
 //        System.out.println(lang.getString("inputCourse"));
 //        int course = in.nextInt();
-//        return studentController.findByDepartmentAndCourse(idDepartment, course);
+//        return CustomerController.findByDepartmentAndCourse(idDepartment, course);
 //    }
 
-    private Student loginStudent(){
+    private Customer loginCustomer(){
         String email = writeFieldValidator("email");
 
-        System.out.println(lang.getString("passwordStudent"));
+        System.out.println(lang.getString("passwordCustomer"));
         String password = in.nextLine();
 
-        return studentController.login(email,password);
+        return customerController.login(email,password);
 
     }
 }

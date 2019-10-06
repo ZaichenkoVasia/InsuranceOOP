@@ -3,23 +3,23 @@ package ua.mycompany.init;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.mycompany.domain.Address;
-import ua.mycompany.domain.Student;
-import ua.mycompany.service.StudentService;
+import ua.mycompany.domain.Customer;
+import ua.mycompany.service.CustomerService;
 
 import java.time.LocalDate;
 
 @Component
 public class Menu {
-    private StudentService studentService;
+    private CustomerService customerService;
 
     @Autowired
-    public Menu(StudentService studentService) {
-        this.studentService = studentService;
+    public Menu(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     public void run() {
 
-        Student student1 = Student.builder()
+        Customer customer1 = Customer.builder()
                 .withName("Name")
                 .withSurname("Surname")
                 .withBirthday(LocalDate.of(2002, 4, 4))
@@ -29,7 +29,7 @@ public class Menu {
                 .withPassword("1111")
                 .build();
 
-        Student student2 = Student.builder()
+        Customer customer2 = Customer.builder()
                 .withName("Kick")
                 .withSurname("Shevchenko")
                 .withBirthday(LocalDate.of(1999, 3, 3))
@@ -39,7 +39,7 @@ public class Menu {
                 .withPassword("2222")
                 .build();
 
-        Student student3 = Student.builder()
+        Customer customer3 = Customer.builder()
                 .withName("Tom")
                 .withSurname("King")
                 .withBirthday(LocalDate.of(1999, 3, 23))
@@ -49,8 +49,8 @@ public class Menu {
                 .withPassword("3333")
                 .build();
 
-        studentService.register(student1);
-        studentService.register(student2);
-        studentService.register(student3);
+        customerService.register(customer1);
+        customerService.register(customer2);
+        customerService.register(customer3);
     }
 }

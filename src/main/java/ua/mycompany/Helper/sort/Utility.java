@@ -1,7 +1,7 @@
 package ua.mycompany.Helper.sort;
 
 import org.springframework.stereotype.Component;
-import ua.mycompany.domain.Student;
+import ua.mycompany.domain.Customer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +11,7 @@ final class Utility {
     private Utility() {
     }
 
-    public static void swap(ArrayList<Student> students, int i, int j) {
-        Collections.swap(students, i, j);
+    public static void swap(ArrayList<Customer> customers, int i, int j) {
+        Collections.swap(customers, i, j);
     }
 }
