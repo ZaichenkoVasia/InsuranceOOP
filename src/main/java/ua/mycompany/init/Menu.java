@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.mycompany.domain.Address;
 import ua.mycompany.domain.Customer;
+import ua.mycompany.domain.Role;
 import ua.mycompany.service.CustomerService;
 
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ public class Menu {
                 .withPhoneNumber("380444743334")
                 .withEmail("email@gmail.com")
                 .withPassword("2222")
+                .withRole(Role.ADMIN)
                 .build();
 
         Customer customer3 = Customer.builder()
