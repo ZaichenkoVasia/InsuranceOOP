@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ua.mycompany.Helper.Utility.UTF8Control;
 import ua.mycompany.Helper.Validator.ValidatorFactory;
 import ua.mycompany.Helper.sort.BubbleSort;
-import ua.mycompany.controller.CustomerController;
+import ua.mycompany.controller.AdminController;
 import ua.mycompany.domain.Customer;
 
 //import javax.validation.ConstraintViolation;
@@ -16,13 +16,13 @@ import java.util.*;
 @Component
 public class CustomerViewInfo {
 
-    private CustomerController customerController;
+    private AdminController adminController;
     private ResourceBundle lang;
     private Scanner in = new Scanner(System.in);
 
     @Autowired
-    public CustomerViewInfo(CustomerController customerController) {
-        this.customerController = customerController;
+    public CustomerViewInfo(AdminController adminController) {
+        this.adminController = adminController;
     }
 
     public void run() {
@@ -77,7 +77,7 @@ public class CustomerViewInfo {
 
         switch (choice) {
             case 1:
-                printAllCustomers(customerController.findAll());
+                printAllCustomers(adminController.findAll());
                 break;
             case 2:
                 createCustomerFromConsole();
@@ -140,7 +140,7 @@ public class CustomerViewInfo {
                 .withEmail(email)
                 .withPassword(password)
                 .build();
-        customerController.register(customer);
+        adminController.register(customer);
         System.out.println(lang.getString("customerCreated") + "\n");
 
         menu();
@@ -153,7 +153,7 @@ public class CustomerViewInfo {
 
     private void sortCustomer() {
         System.out.println(lang.getString("customersAreSorted") + "\n");
-        printAllCustomers(BubbleSort.sort(customerController.findAll()));
+        printAllCustomers(BubbleSort.sort(adminController.findAll()));
     }
 
     private String writeFieldValidator(String nameField) {
@@ -170,7 +170,7 @@ public class CustomerViewInfo {
 
     private Customer findById(){
         System.out.println(lang.getString("inputId"));
-        return customerController.findById(in.nextLong());
+        return adminController.findById(in.nextLong());
     }
 //
 //    private ArrayList<Customer> findByDepartment(){
@@ -199,7 +199,7 @@ public class CustomerViewInfo {
         System.out.println(lang.getString("passwordCustomer"));
         String password = in.nextLine();
 
-        return customerController.login(email,password);
+        return adminController.login(email,password);
 
     }
 }

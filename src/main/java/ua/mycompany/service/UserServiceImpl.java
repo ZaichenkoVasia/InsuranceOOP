@@ -9,16 +9,15 @@ import ua.mycompany.exception.UncorrectedLoginRuntimeException;
 import ua.mycompany.exception.CustomerNotExistRuntimeException;
 import ua.mycompany.repository.CustomerRepository;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class UserServiceImpl implements UserService {
 
-    private CustomerRepository customerRepository;
+    protected CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public UserServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -69,18 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.update(customer);
     }
 
-    @Override
-    public Customer deleteById(Long id) {
-        if (id < 0) {
-            throw new UncorrectedIdRuntimeException("Id of customer must be > 0");
-        }
-        Optional<Customer> CustomerDeleteById = customerRepository.deleteById(id);
-        if (CustomerDeleteById.isPresent()) {
-            return CustomerDeleteById.get();
-        }
-        throw new UncorrectedIdRuntimeException("Id of customer uncorrected");
-    }
-
 //    @Override
 //    public ArrayList<Customer> findByDepartment(Long idDepartment) {
 //        if (idDepartment < 0) {
@@ -112,10 +99,5 @@ public class CustomerServiceImpl implements CustomerService {
 //        }
 //        return customerRepository.findByDepartmentAndCourse(idDepartment, course);
 //    }
-
-    @Override
-    public ArrayList<Customer> findAll() {
-        return customerRepository.findAll();
-    }
 
 }

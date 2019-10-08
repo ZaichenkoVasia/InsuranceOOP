@@ -2,9 +2,7 @@ package ua.mycompany.service;
 
 import ua.mycompany.domain.Customer;
 
-import java.util.ArrayList;
-
-public interface CustomerService {
+public interface UserService {
 
     Customer register(Customer customer);
 
@@ -14,8 +12,6 @@ public interface CustomerService {
 
     void update(Customer customer);
 
-    Customer deleteById(Long id);
-
 //    ArrayList<Customer> findByDepartment(Long idDepartment);
 //
 //    ArrayList<Customer> findByYear(int year);
@@ -24,5 +20,5 @@ public interface CustomerService {
 //
 //    ArrayList<Customer> findByDepartmentAndCourse(Long idDepartment, int course);
 
-    ArrayList<Customer> findAll ();
+
 }

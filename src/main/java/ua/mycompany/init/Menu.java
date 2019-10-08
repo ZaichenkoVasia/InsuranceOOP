@@ -5,17 +5,17 @@ import org.springframework.stereotype.Component;
 import ua.mycompany.domain.Address;
 import ua.mycompany.domain.Customer;
 import ua.mycompany.domain.Role;
-import ua.mycompany.service.CustomerService;
+import ua.mycompany.service.UserService;
 
 import java.time.LocalDate;
 
 @Component
 public class Menu {
-    private CustomerService customerService;
+    private UserService userService;
 
     @Autowired
-    public Menu(CustomerService customerService) {
-        this.customerService = customerService;
+    public Menu(UserService userService) {
+        this.userService = userService;
     }
 
     public void run() {
@@ -51,8 +51,8 @@ public class Menu {
                 .withPassword("3333")
                 .build();
 
-        customerService.register(customer1);
-        customerService.register(customer2);
-        customerService.register(customer3);
+        userService.register(customer1);
+        userService.register(customer2);
+        userService.register(customer3);
     }
 }
