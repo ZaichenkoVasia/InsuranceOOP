@@ -3,13 +3,16 @@ package ua.mycompany.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import ua.mycompany.helper.utility.PasswordUtils;
 import ua.mycompany.domain.customer.Customer;
+import ua.mycompany.domain.order.Insurance;
+import ua.mycompany.exception.CustomerNotExistRuntimeException;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
 import ua.mycompany.exception.UncorrectedLoginRuntimeException;
-import ua.mycompany.exception.CustomerNotExistRuntimeException;
+import ua.mycompany.helper.utility.PasswordUtils;
 import ua.mycompany.repository.CustomerRepository;
+import ua.mycompany.repository.InsuranceRepository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -17,10 +20,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     protected CustomerRepository customerRepository;
+    private InsuranceService insuranceService;
 
     @Autowired
-    public UserServiceImpl(CustomerRepository customerRepository) {
+    public UserServiceImpl(CustomerRepository customerRepository, InsuranceService insuranceService) {
         this.customerRepository = customerRepository;
+        this.insuranceService = insuranceService;
     }
 
     @Override
@@ -55,9 +60,9 @@ public class UserServiceImpl implements UserService {
         if (id < 0) {
             throw new UncorrectedIdRuntimeException("Id of customer must be > 0");
         }
-        Optional<Customer> CustomerFindById = customerRepository.findById(id);
-        if (CustomerFindById.isPresent()) {
-            return CustomerFindById.get();
+        Optional<Customer> customerFindById = customerRepository.findById(id);
+        if (customerFindById.isPresent()) {
+            return customerFindById.get();
         }
         throw new UncorrectedIdRuntimeException("Id of customer uncorrected");
     }
@@ -70,36 +75,72 @@ public class UserServiceImpl implements UserService {
         customerRepository.update(customer);
     }
 
-//    @Override
-//    public ArrayList<Customer> findByDepartment(Long idDepartment) {
-//        if (idDepartment < 0) {
-//            throw new UncorrectedIdRuntimeException("Id of de must be > 0");
-//        }
-//        return customerRepository.findByDepartment(idDepartment);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByYear(int year) {
-//        if (year < 1990) {
-//            throw new IllegalArgumentException("year must be > 1990");
-//        }
-//        return customerRepository.findByYear(year);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByGroup(String group) {
-//        if (group == null) {
-//            throw new IllegalArgumentException("Group can not be null");
-//        }
-//        return customerRepository.findByGroup(group);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByDepartmentAndCourse(Long idDepartment, int course) {
-//        if (course < 0 || course > 6 || idDepartment < 0) {
-//            throw new IllegalArgumentException("Course must be in range [0;6] or id department must be positive");
-//        }
-//        return customerRepository.findByDepartmentAndCourse(idDepartment, course);
-//    }
+    @Override
+    public void addInsurance(Customer customer, Long id) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        Insurance insurance = insuranceService.findById(id);
+        customer.getDerivative().add(insurance);
+        update(customer);
+    }
 
+    @Override
+    public void deleteInsurance(Customer customer, Long id) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        Insurance insurance = insuranceService.findById(id);
+        customer.getDerivative().remove(insurance);
+        update(customer);
+    }
+
+    @Override
+    public ArrayList<Insurance> findAllInsurance(Customer customer){
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().getInsurances();
+    }
+
+    @Override
+    public ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().sortByRisk();
+    }
+
+    @Override
+    public ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().searchElementRisk(startRange,endRange);
+    }
+
+    @Override
+    public ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().searchElementPrice(startRange,endRange);
+    }
+
+
+    @Override
+    public ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().searchElementPayment(startRange,endRange);
+    }
+
+    @Override
+    public double summaryOfPriceInsurances(Customer customer) {
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().sumOfInsurance();
+    }
 }

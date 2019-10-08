@@ -1,5 +1,7 @@
 package ua.mycompany.domain.customer;
 
+import ua.mycompany.domain.order.Derivative;
+
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
@@ -16,6 +18,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
     private final String password;
     private final Role role;
     private static Long counter = 0L;
+    private Derivative derivative;
 
     private final Comparator<Customer> CUSTOMER_COMPARATOR_BY_AGE =
             Comparator.comparingInt(customer -> LocalDate.now().getYear() - customer.birthday.getYear());
@@ -40,6 +43,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
         this.email = builder.email;
         this.password = builder.password;
         this.role = builder.role;
+        derivative = new Derivative();
     }
 
     public static Builder builder() {
@@ -80,6 +84,14 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
 
     public Role getRole() {
         return role;
+    }
+
+    public Derivative getDerivative() {
+        return derivative;
+    }
+
+    public void setDerivative(Derivative derivative) {
+        this.derivative = derivative;
     }
 
     public Comparator<Customer> getcustomerComparator() {
@@ -214,6 +226,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", derivative=" + derivative +
                 '}';
     }
 }

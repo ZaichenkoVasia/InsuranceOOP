@@ -9,6 +9,8 @@ public abstract class Insurance implements Comparable<Insurance>{
     protected final double risk;
     protected final double price;
     protected final double payment;
+    protected final Long id;
+    protected static Long counter = 0L;
 
     public Insurance(double risk, double price, double payment) {
         if(risk<0 || risk > 1 || price <0 || payment<0){
@@ -17,6 +19,7 @@ public abstract class Insurance implements Comparable<Insurance>{
         this.risk = risk;
         this.price = price;
         this.payment = payment;
+        this.id = ++counter;
     }
 
     public double getRisk() {
@@ -29,6 +32,10 @@ public abstract class Insurance implements Comparable<Insurance>{
 
     public double getPayment() {
         return payment;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
@@ -54,6 +61,6 @@ public abstract class Insurance implements Comparable<Insurance>{
 
     @Override
     public int compareTo(Insurance o) {
-        return (int) (-this.risk-o.risk);
+        return (int) (-this.risk *100 + o.risk *100);
     }
 }

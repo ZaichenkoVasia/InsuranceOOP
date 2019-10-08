@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import ua.mycompany.domain.customer.Address;
 import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.domain.customer.Role;
+import ua.mycompany.domain.order.*;
+import ua.mycompany.service.InsuranceService;
 import ua.mycompany.service.UserService;
 
 import java.time.LocalDate;
@@ -12,10 +14,12 @@ import java.time.LocalDate;
 @Component
 public class Menu {
     private UserService userService;
+    private InsuranceService insuranceService;
 
     @Autowired
-    public Menu(UserService userService) {
+    public Menu(UserService userService, InsuranceService insuranceService) {
         this.userService = userService;
+        this.insuranceService = insuranceService;
     }
 
     public void run() {
@@ -26,7 +30,7 @@ public class Menu {
                 .withBirthday(LocalDate.of(2002, 4, 4))
                 .withAddress(new Address("city", "street", 10))
                 .withPhoneNumber("380444747474")
-                .withEmail("dsadas@gmail.com")
+                .withEmail("user@gmail.com")
                 .withPassword("1111")
                 .build();
 
@@ -36,7 +40,7 @@ public class Menu {
                 .withBirthday(LocalDate.of(1999, 3, 3))
                 .withAddress(new Address("Kyiv", "Lviv", 2))
                 .withPhoneNumber("380444743334")
-                .withEmail("email@gmail.com")
+                .withEmail("admin@gmail.com")
                 .withPassword("2222")
                 .withRole(Role.ADMIN)
                 .build();
@@ -54,5 +58,17 @@ public class Menu {
         userService.register(customer1);
         userService.register(customer2);
         userService.register(customer3);
+
+        BusinessInsurance business = new BusinessInsurance(0.1, 1000, 500000);
+        CarInsurance car = new CarInsurance(0.2, 1500, 10000);
+        HouseInsurance house = new HouseInsurance(0.05, 2000, 1000000);
+        LifeInsurance life = new LifeInsurance(0.05, 3000, 100000000);
+        MedicalInsurance medical = new MedicalInsurance(0.3, 2000, 10000);
+
+        insuranceService.save(business);
+        insuranceService.save(car);
+        insuranceService.save(house);
+        insuranceService.save(life);
+        insuranceService.save(medical);
     }
 }

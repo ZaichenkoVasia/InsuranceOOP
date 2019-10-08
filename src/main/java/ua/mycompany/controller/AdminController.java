@@ -3,6 +3,7 @@ package ua.mycompany.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.mycompany.domain.customer.Customer;
+import ua.mycompany.domain.order.Insurance;
 import ua.mycompany.service.AdminService;
 
 import java.util.ArrayList;
@@ -40,21 +41,35 @@ public class AdminController {
         return adminService.findAll();
     }
 
-//    public ArrayList<Customer> findByDepartment(Long idDepartment) {
-//        return userService.findByDepartment(idDepartment);
-//    }
-//
-//    public ArrayList<Customer> findByYear(int year) {
-//        return userService.findByYear(year);
-//    }
-//
-//    public ArrayList<Customer> findByGroup(String group) {
-//        return userService.findByGroup(group);
-//    }
-//
-//    public ArrayList<Customer> findByDepartmentAndCourse(Long idDepartment, int course) {
-//        return userService.findByDepartmentAndCourse(idDepartment, course);
-//    }
+    public void addInsurance(Customer customer, Long id) {
+        adminService.addInsurance(customer, id);
+    }
 
+    public void deleteInsurance(Customer customer, Long id) {
+        adminService.deleteInsurance(customer, id);
+    }
 
+    public ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
+        return adminService.sortInsuranceByRisk(customer);
+    }
+
+    public ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
+        return adminService.rangeByRisk(customer, startRange, endRange);
+    }
+
+    public ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange) {
+        return adminService.rangeByPrice(customer, startRange, endRange);
+    }
+
+    public ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange) {
+        return adminService.rangeByPayment(customer, startRange, endRange);
+    }
+
+    public double summaryOfPriceInsurances(Customer customer) {
+        return adminService.summaryOfPriceInsurances(customer);
+    }
+
+    public ArrayList<Insurance> findAllInsurance(Customer customer) {
+        return adminService.findAllInsurance(customer);
+    }
 }
