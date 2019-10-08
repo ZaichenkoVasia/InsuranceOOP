@@ -1,4 +1,4 @@
-package ua.mycompany.domain;
+package ua.mycompany.domain.customer;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -14,6 +14,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
     private final String phoneNumber;
     private final String email;
     private final String password;
+    private final Role role;
     private static Long counter = 0L;
 
     private final Comparator<Customer> CUSTOMER_COMPARATOR_BY_AGE =
@@ -38,6 +39,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
         this.phoneNumber = builder.phoneNumber;
         this.email = builder.email;
         this.password = builder.password;
+        this.role = builder.role;
     }
 
     public static Builder builder() {
@@ -76,6 +78,10 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
         return password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public Comparator<Customer> getcustomerComparator() {
         return CUSTOMER_COMPARATOR_BY_NAME.thenComparing(CUSTOMER_COMPARATOR_BY_SURNAME.thenComparing(CUSTOMER_COMPARATOR_BY_AGE));
     }
@@ -100,6 +106,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
                 .withPhoneNumber(phoneNumber)
                 .withEmail(email)
                 .withPassword(newPassword)
+                .withRole(role)
                 .build();
     }
 
@@ -112,6 +119,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
         private String phoneNumber;
         private String email;
         private String password;
+        private Role role = Role.USER;
 
         private Builder() {
         }
@@ -160,12 +168,21 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
             return this;
         }
 
+        public Builder withRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Customer customer = (Customer) o;
         return Objects.equals(id, customer.id) &&
                 Objects.equals(name, customer.name) &&
@@ -196,6 +213,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

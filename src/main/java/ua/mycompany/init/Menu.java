@@ -2,19 +2,20 @@ package ua.mycompany.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.mycompany.domain.Address;
-import ua.mycompany.domain.Customer;
-import ua.mycompany.service.CustomerService;
+import ua.mycompany.domain.customer.Address;
+import ua.mycompany.domain.customer.Customer;
+import ua.mycompany.domain.customer.Role;
+import ua.mycompany.service.UserService;
 
 import java.time.LocalDate;
 
 @Component
 public class Menu {
-    private CustomerService customerService;
+    private UserService userService;
 
     @Autowired
-    public Menu(CustomerService customerService) {
-        this.customerService = customerService;
+    public Menu(UserService userService) {
+        this.userService = userService;
     }
 
     public void run() {
@@ -37,6 +38,7 @@ public class Menu {
                 .withPhoneNumber("380444743334")
                 .withEmail("email@gmail.com")
                 .withPassword("2222")
+                .withRole(Role.ADMIN)
                 .build();
 
         Customer customer3 = Customer.builder()
@@ -49,8 +51,8 @@ public class Menu {
                 .withPassword("3333")
                 .build();
 
-        customerService.register(customer1);
-        customerService.register(customer2);
-        customerService.register(customer3);
+        userService.register(customer1);
+        userService.register(customer2);
+        userService.register(customer3);
     }
 }

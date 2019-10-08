@@ -1,4 +1,4 @@
-package ua.mycompany.Helper.Utility;
+package ua.mycompany.helper.utility;
 
 import org.springframework.stereotype.Component;
 

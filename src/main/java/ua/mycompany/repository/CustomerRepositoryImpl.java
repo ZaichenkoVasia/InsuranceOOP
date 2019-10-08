@@ -2,7 +2,7 @@ package ua.mycompany.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.mycompany.domain.Customer;
+import ua.mycompany.domain.customer.Customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
