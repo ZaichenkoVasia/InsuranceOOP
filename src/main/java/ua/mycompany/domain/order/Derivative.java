@@ -36,12 +36,12 @@ public class Derivative {
         return insurances;
     }
 
-    public int sumOfInsurance() {
-        int sum = 0;
+    public double sumOfInsurance() {
+        double sum = 0;
         for (Insurance element : insurances) {
             sum += element.getPrice();
         }
-        return  sum;
+        return sum;
     }
 
     public ArrayList<Insurance> searchElementRisk(double startRange, double endRange) {
