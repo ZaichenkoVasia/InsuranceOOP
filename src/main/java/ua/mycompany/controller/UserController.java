@@ -36,31 +36,35 @@ public class UserController {
         userService.update(customer);
     }
 
-    public void addInsurance(Customer customer, Insurance insurance) {
-        userService.addInsurance(customer, insurance);
+    public void addInsurance(Customer customer, Long id) {
+        userService.addInsurance(customer, id);
     }
 
-    void deleteInsurance(Customer customer, Insurance insurance) {
-        userService.deleteInsurance(customer, insurance);
+    public void deleteInsurance(Customer customer, Long id) {
+        userService.deleteInsurance(customer, id);
     }
 
-    ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
+    public ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
         return userService.sortInsuranceByRisk(customer);
     }
 
-    ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
+    public ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
         return userService.rangeByRisk(customer, startRange, endRange);
     }
 
-    ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange){
+    public ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange){
         return userService.rangeByPrice(customer, startRange, endRange);
     }
 
-    ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange){
+    public ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange){
         return userService.rangeByPayment(customer, startRange, endRange);
     }
 
-    double summaryOfPriceInsurances(Customer customer){
+    public double summaryOfPriceInsurances(Customer customer){
         return userService.summaryOfPriceInsurances(customer);
+    }
+
+    public ArrayList<Insurance> findAllInsurance(Customer customer) {
+        return userService.findAllInsurance(customer);
     }
 }

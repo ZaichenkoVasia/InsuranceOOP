@@ -8,6 +8,6 @@ public class HouseInsurance extends Insurance {
 
     @Override
     public String toString() {
-        return "HouseInsurance{ risk=" + risk + ", price=" + price + ", payment=" + payment + '}';
+        return "HouseInsurance{id = " + id +", risk=" + risk + ", price=" + price + ", payment=" + payment + '}';
     }
 }

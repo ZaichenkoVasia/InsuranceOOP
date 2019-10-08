@@ -41,31 +41,35 @@ public class AdminController {
         return adminService.findAll();
     }
 
-    public void addInsurance(Customer customer, Insurance insurance) {
-        adminService.addInsurance(customer, insurance);
+    public void addInsurance(Customer customer, Long id) {
+        adminService.addInsurance(customer, id);
     }
 
-    void deleteInsurance(Customer customer, Insurance insurance) {
-        adminService.deleteInsurance(customer, insurance);
+    public void deleteInsurance(Customer customer, Long id) {
+        adminService.deleteInsurance(customer, id);
     }
 
-    ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
+    public ArrayList<Insurance> sortInsuranceByRisk(Customer customer) {
         return adminService.sortInsuranceByRisk(customer);
     }
 
-    ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
+    public ArrayList<Insurance> rangeByRisk(Customer customer, double startRange, double endRange) {
         return adminService.rangeByRisk(customer, startRange, endRange);
     }
 
-    ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange){
+    public ArrayList<Insurance> rangeByPrice(Customer customer, double startRange, double endRange) {
         return adminService.rangeByPrice(customer, startRange, endRange);
     }
 
-    ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange){
+    public ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange) {
         return adminService.rangeByPayment(customer, startRange, endRange);
     }
 
-    double summaryOfPriceInsurances(Customer customer){
+    public double summaryOfPriceInsurances(Customer customer) {
         return adminService.summaryOfPriceInsurances(customer);
+    }
+
+    public ArrayList<Insurance> findAllInsurance(Customer customer) {
+        return adminService.findAllInsurance(customer);
     }
 }

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.domain.order.Insurance;
 import ua.mycompany.exception.CustomerNotExistRuntimeException;
-import ua.mycompany.exception.InsuranceNotExistRuntimeException;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
 import ua.mycompany.exception.UncorrectedLoginRuntimeException;
 import ua.mycompany.helper.utility.PasswordUtils;
 import ua.mycompany.repository.CustomerRepository;
+import ua.mycompany.repository.InsuranceRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -20,10 +20,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     protected CustomerRepository customerRepository;
+    private InsuranceService insuranceService;
 
     @Autowired
-    public UserServiceImpl(CustomerRepository customerRepository) {
+    public UserServiceImpl(CustomerRepository customerRepository, InsuranceService insuranceService) {
         this.customerRepository = customerRepository;
+        this.insuranceService = insuranceService;
     }
 
     @Override
@@ -74,27 +76,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addInsurance(Customer customer, Insurance insurance) {
+    public void addInsurance(Customer customer, Long id) {
         if (customer == null) {
             throw new CustomerNotExistRuntimeException("customer not exist");
         }
-        if (insurance == null) {
-            throw new InsuranceNotExistRuntimeException("Insurance is not exist");
-        }
+        Insurance insurance = insuranceService.findById(id);
         customer.getDerivative().add(insurance);
         update(customer);
     }
 
     @Override
-    public void deleteInsurance(Customer customer, Insurance insurance) {
+    public void deleteInsurance(Customer customer, Long id) {
         if (customer == null) {
             throw new CustomerNotExistRuntimeException("customer not exist");
         }
-        if (insurance == null) {
-            throw new InsuranceNotExistRuntimeException("Insurance is not exist");
-        }
+        Insurance insurance = insuranceService.findById(id);
         customer.getDerivative().remove(insurance);
         update(customer);
+    }
+
+    @Override
+    public ArrayList<Insurance> findAllInsurance(Customer customer){
+        if (customer == null) {
+            throw new CustomerNotExistRuntimeException("customer not exist");
+        }
+        return customer.getDerivative().getInsurances();
     }
 
     @Override

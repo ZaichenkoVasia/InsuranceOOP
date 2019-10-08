@@ -17,6 +17,10 @@ public class Derivative {
         this.insurances = insurances;
     }
 
+    public ArrayList<Insurance> getInsurances() {
+        return insurances;
+    }
+
     public void add(Insurance insurance){
         if(insurance == null){
             throw new ActionDerivativeWithNullRuntimeException("Add null to derivative");
@@ -81,5 +85,15 @@ public class Derivative {
             }
         }
         return searchElementPayment;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("Derivative{ insurances= ");
+        for (Insurance insurance:insurances) {
+            result.append(insurance.toString());
+        }
+        result.append('}');
+        return result.toString();
     }
 }

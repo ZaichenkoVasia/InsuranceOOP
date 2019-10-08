@@ -13,11 +13,13 @@ public interface UserService {
 
     Customer findById(Long id);
 
+    ArrayList<Insurance> findAllInsurance(Customer customer);
+
     void update(Customer customer);
 
-    void addInsurance(Customer customer, Insurance insurance);
+    void addInsurance(Customer customer, Long idInsurance);
 
-    void deleteInsurance(Customer customer, Insurance insurance);
+    void deleteInsurance(Customer customer, Long idInsurance);
 
     ArrayList<Insurance> sortInsuranceByRisk(Customer customer);
 

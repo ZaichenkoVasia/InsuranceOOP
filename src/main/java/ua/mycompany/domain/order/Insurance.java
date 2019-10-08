@@ -61,6 +61,6 @@ public abstract class Insurance implements Comparable<Insurance>{
 
     @Override
     public int compareTo(Insurance o) {
-        return (int) (-this.risk-o.risk);
+        return (int) (-this.risk *100 + o.risk *100);
     }
 }

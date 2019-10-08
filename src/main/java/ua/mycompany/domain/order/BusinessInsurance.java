@@ -8,6 +8,6 @@ public class BusinessInsurance extends Insurance {
 
     @Override
     public String toString() {
-        return "BusinessInsurance{ risk=" + risk + ", price=" + price + ", payment=" + payment + '}';
+        return "BusinessInsurance{ id = " + id + ", risk=" + risk + ", price=" + price + ", payment=" + payment + '}';
     }
 }
