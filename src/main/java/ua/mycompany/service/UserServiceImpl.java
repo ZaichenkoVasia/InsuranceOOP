@@ -1,6 +1,7 @@
 package ua.mycompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ua.mycompany.Helper.Utility.PasswordUtils;
 import ua.mycompany.domain.Customer;
@@ -12,6 +13,7 @@ import ua.mycompany.repository.CustomerRepository;
 import java.util.Optional;
 
 @Service
+@Primary
 public class UserServiceImpl implements UserService {
 
     protected CustomerRepository customerRepository;

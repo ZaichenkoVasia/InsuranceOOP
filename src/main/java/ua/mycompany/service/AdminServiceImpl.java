@@ -1,6 +1,7 @@
 package ua.mycompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.mycompany.domain.Customer;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
 import ua.mycompany.repository.CustomerRepository;
@@ -8,6 +9,7 @@ import ua.mycompany.repository.CustomerRepository;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Service
 public class AdminServiceImpl extends UserServiceImpl implements AdminService{
 
     @Autowired
