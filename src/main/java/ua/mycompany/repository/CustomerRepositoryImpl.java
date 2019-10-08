@@ -24,18 +24,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> findByEmail(String email) {
-        Customer customer = null;
-        for (Long i = 1L; i < idToCustomers.size() + 1; i++) {
-            if (idToCustomers.get(i).getEmail().equals(email)) {
-                customer = idToCustomers.get(i);
-                break;
-            }
-        }
-        return Optional.ofNullable(customer);
-    }
-
-    @Override
     public Optional<Customer> findById(Long id) {
         return Optional.ofNullable(idToCustomers.get(id));
     }
@@ -48,6 +36,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Optional<Customer> deleteById(Long id) {
         return Optional.ofNullable(idToCustomers.remove(id));
+    }
+
+    @Override
+    public ArrayList<Customer> findAll() {
+        return new ArrayList<Customer> (idToCustomers.values());
     }
 
 //    @Override
@@ -97,7 +90,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 //    }
 
     @Override
-    public ArrayList<Customer> findAll() {
-        return new ArrayList<Customer> (idToCustomers.values());
+    public Optional<Customer> findByEmail(String email) {
+        Customer customer = null;
+        for (Long i = 1L; i < idToCustomers.size() + 1; i++) {
+            if (idToCustomers.get(i).getEmail().equals(email)) {
+                customer = idToCustomers.get(i);
+                break;
+            }
+        }
+        return Optional.ofNullable(customer);
     }
 }
