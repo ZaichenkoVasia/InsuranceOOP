@@ -1,4 +1,4 @@
-package ua.mycompany.Helper.Validator;
+package ua.mycompany.helper.validator;
 
 import org.springframework.stereotype.Component;
 

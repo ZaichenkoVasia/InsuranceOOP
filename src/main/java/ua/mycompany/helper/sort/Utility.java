@@ -1,7 +1,7 @@
-package ua.mycompany.Helper.sort;
+package ua.mycompany.helper.sort;
 
 import org.springframework.stereotype.Component;
-import ua.mycompany.domain.Customer;
+import ua.mycompany.domain.customer.Customer;
 
 import java.util.ArrayList;
 import java.util.Collections;

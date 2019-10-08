@@ -1,4 +1,4 @@
-package ua.mycompany.domain;
+package ua.mycompany.domain.customer;
 
 import java.util.Objects;
 

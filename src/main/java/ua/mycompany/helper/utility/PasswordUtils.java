@@ -1,4 +1,4 @@
-package ua.mycompany.Helper.Utility;
+package ua.mycompany.helper.utility;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

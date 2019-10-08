@@ -1,4 +1,4 @@
-package ua.mycompany.Helper.Validator;
+package ua.mycompany.helper.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,15 +1,14 @@
 package ua.mycompany.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import ua.mycompany.Helper.Utility.UTF8Control;
-import ua.mycompany.Helper.Validator.ValidatorFactory;
-import ua.mycompany.Helper.sort.BubbleSort;
+import ua.mycompany.helper.utility.UTF8Control;
+import ua.mycompany.helper.validator.ValidatorFactory;
+import ua.mycompany.helper.sort.BubbleSort;
 import ua.mycompany.controller.AdminController;
 import ua.mycompany.controller.UserController;
-import ua.mycompany.domain.Customer;
-import ua.mycompany.domain.Role;
+import ua.mycompany.domain.customer.Customer;
+import ua.mycompany.domain.customer.Role;
 
 //import javax.validation.ConstraintViolation;
 import java.time.LocalDate;
