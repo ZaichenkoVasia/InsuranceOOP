@@ -2,7 +2,6 @@ package ua.mycompany.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.domain.order.Insurance;
 
 import java.util.ArrayList;
@@ -30,6 +29,11 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     }
 
     @Override
+    public ArrayList<Insurance> findAll() {
+        return new ArrayList<Insurance>(idToInsurance.values());
+    }
+
+    @Override
     public void update(Insurance insurance) {
         idToInsurance.replace(insurance.getId(), insurance);
     }
@@ -37,10 +41,5 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     @Override
     public Optional<Insurance> deleteById(Long id) {
         return Optional.ofNullable(idToInsurance.remove(id));
-    }
-
-    @Override
-    public ArrayList<Insurance> findAll() {
-        return new ArrayList<Insurance> (idToInsurance.values());
     }
 }

@@ -3,11 +3,11 @@ package ua.mycompany.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import ua.mycompany.helper.utility.PasswordUtils;
 import ua.mycompany.domain.customer.Customer;
+import ua.mycompany.exception.CustomerNotExistRuntimeException;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
 import ua.mycompany.exception.UncorrectedLoginRuntimeException;
-import ua.mycompany.exception.CustomerNotExistRuntimeException;
+import ua.mycompany.helper.utility.PasswordUtils;
 import ua.mycompany.repository.CustomerRepository;
 
 import java.util.Optional;
@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService {
         if (id < 0) {
             throw new UncorrectedIdRuntimeException("Id of customer must be > 0");
         }
-        Optional<Customer> CustomerFindById = customerRepository.findById(id);
-        if (CustomerFindById.isPresent()) {
-            return CustomerFindById.get();
+        Optional<Customer> customerFindById = customerRepository.findById(id);
+        if (customerFindById.isPresent()) {
+            return customerFindById.get();
         }
         throw new UncorrectedIdRuntimeException("Id of customer uncorrected");
     }
@@ -69,37 +69,4 @@ public class UserServiceImpl implements UserService {
         }
         customerRepository.update(customer);
     }
-
-//    @Override
-//    public ArrayList<Customer> findByDepartment(Long idDepartment) {
-//        if (idDepartment < 0) {
-//            throw new UncorrectedIdRuntimeException("Id of de must be > 0");
-//        }
-//        return customerRepository.findByDepartment(idDepartment);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByYear(int year) {
-//        if (year < 1990) {
-//            throw new IllegalArgumentException("year must be > 1990");
-//        }
-//        return customerRepository.findByYear(year);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByGroup(String group) {
-//        if (group == null) {
-//            throw new IllegalArgumentException("Group can not be null");
-//        }
-//        return customerRepository.findByGroup(group);
-//    }
-//
-//    @Override
-//    public ArrayList<Customer> findByDepartmentAndCourse(Long idDepartment, int course) {
-//        if (course < 0 || course > 6 || idDepartment < 0) {
-//            throw new IllegalArgumentException("Course must be in range [0;6] or id department must be positive");
-//        }
-//        return customerRepository.findByDepartmentAndCourse(idDepartment, course);
-//    }
-
 }

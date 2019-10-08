@@ -88,9 +88,6 @@ public class CustomerViewInfo {
         String email = writeFieldValidator("email");
         String phoneNumber = writeFieldValidator("phoneNumber");
         String birthday = writeFieldValidator("date");
-//        System.out.println(lang.getString("groupCustomer"));
-//        String group = in.nextLine();
-//        int course = Integer.parseInt(writeFieldValidator("course"));
         System.out.println(lang.getString("passwordCustomer"));
         String password = in.nextLine();
 
@@ -156,27 +153,6 @@ public class CustomerViewInfo {
         System.out.println(lang.getString("inputId"));
         return adminController.findById(in.nextLong());
     }
-
-//
-//    private ArrayList<Customer> findByDepartment(){
-//        System.out.println(lang.getString("inputIdDepartment"));
-//        return CustomerController.findByDepartment(in.nextLong());
-//    }
-//
-//    private ArrayList<Customer> findByGroup(){
-//        System.out.println(lang.getString("inputGroup"));
-//        String group = in.nextLine();
-//        group = in.nextLine();
-//        return CustomerController.findByGroup(group);
-//    }
-//
-//    private ArrayList<Customer> findByDepartmentAndCourse(){
-//        System.out.println(lang.getString("inputIdDepartment"));
-//        Long idDepartment = in.nextLong();
-//        System.out.println(lang.getString("inputCourse"));
-//        int course = in.nextInt();
-//        return CustomerController.findByDepartmentAndCourse(idDepartment, course);
-//    }
 
     private void menuAdmin() {
         System.out.println(lang.getString("menu"));

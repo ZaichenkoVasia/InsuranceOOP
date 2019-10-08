@@ -32,20 +32,4 @@ public class UserController {
     public void update(Customer customer) {
         userService.update(customer);
     }
-
-//    public ArrayList<Customer> findByDepartment(Long idDepartment) {
-//        return userService.findByDepartment(idDepartment);
-//    }
-//
-//    public ArrayList<Customer> findByYear(int year) {
-//        return userService.findByYear(year);
-//    }
-//
-//    public ArrayList<Customer> findByGroup(String group) {
-//        return userService.findByGroup(group);
-//    }
-//
-//    public ArrayList<Customer> findByDepartmentAndCourse(Long idDepartment, int course) {
-//        return userService.findByDepartmentAndCourse(idDepartment, course);
-//    }
 }
