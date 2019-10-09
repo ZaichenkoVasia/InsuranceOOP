@@ -1,6 +1,7 @@
 package ua.mycompany.domain.customer;
 
 import ua.mycompany.domain.order.Derivative;
+import ua.mycompany.util.prototype.CustomerPrototype;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -105,7 +106,7 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
 
     @Override
     public CustomerPrototype clone(String newPassword) {
-        Address address = (Address)Optional.ofNullable(this.address)
+        Address address = (Address) Optional.ofNullable(this.address)
                 .map(Address::clone)
                 .orElse(null);
 
@@ -184,7 +185,6 @@ public class Customer implements Comparable<Customer>, CustomerPrototype {
             this.role = role;
             return this;
         }
-
     }
 
     @Override

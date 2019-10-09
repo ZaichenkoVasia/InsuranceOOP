@@ -4,7 +4,7 @@ import ua.mycompany.exception.InsuranceUncorrectedDataRuntimeException;
 
 import java.util.Objects;
 
-public abstract class Insurance implements Comparable<Insurance>{
+public abstract class Insurance implements Comparable<Insurance> {
 
     protected final double risk;
     protected final double price;
@@ -13,7 +13,7 @@ public abstract class Insurance implements Comparable<Insurance>{
     protected static Long counter = 0L;
 
     public Insurance(double risk, double price, double payment) {
-        if(risk<0 || risk > 1 || price <0 || payment<0){
+        if (risk < 0 || risk > 1 || price < 0 || payment < 0) {
             throw new InsuranceUncorrectedDataRuntimeException("Uncorrected value of insurance");
         }
         this.risk = risk;
@@ -61,6 +61,6 @@ public abstract class Insurance implements Comparable<Insurance>{
 
     @Override
     public int compareTo(Insurance o) {
-        return (int) (-this.risk *100 + o.risk *100);
+        return (int) (-this.risk * 100 + o.risk * 100);
     }
 }
