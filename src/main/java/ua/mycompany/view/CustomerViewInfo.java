@@ -2,20 +2,24 @@ package ua.mycompany.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.mycompany.controller.InsuranceController;
-import ua.mycompany.domain.order.Insurance;
-import ua.mycompany.helper.utility.UTF8Control;
-import ua.mycompany.helper.validator.ValidatorFactory;
-import ua.mycompany.helper.sort.BubbleSort;
 import ua.mycompany.controller.AdminController;
+import ua.mycompany.controller.InsuranceController;
 import ua.mycompany.controller.UserController;
 import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.domain.customer.Role;
+import ua.mycompany.domain.order.Insurance;
+import ua.mycompany.util.localization.UTF8Control;
+import ua.mycompany.util.sort.BubbleSort;
+import ua.mycompany.util.validator.ValidatorFactory;
 
-//import javax.validation.ConstraintViolation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Scanner;
+
+//import javax.validation.ConstraintViolation;
 
 @Component
 public class CustomerViewInfo {
@@ -40,7 +44,7 @@ public class CustomerViewInfo {
 
     protected void chooseMenuLang() {
 
-        System.out.println("Choose language/Оберіть мову");
+        System.out.println("\nChoose language/Оберіть мову");
         System.out.println("English (1)");
         System.out.println("Українська (2)");
         int chooseLanguage = in.nextInt();
@@ -68,21 +72,21 @@ public class CustomerViewInfo {
         System.out.println("1 - " + lang.getString("registration"));
         System.out.println("2 - " + lang.getString("login"));
         int loginOrRegister = in.nextInt();
-        if(loginOrRegister == 1){
+        if (loginOrRegister == 1) {
             register();
-        }else if (loginOrRegister == 2){
+        } else if (loginOrRegister == 2) {
             loginCustomer();
-        }else {
+        } else {
             loginOrRegister();
         }
     }
 
-    private void loginCustomer(){
+    private void loginCustomer() {
         String email = writeFieldValidator("email");
 
         System.out.println(lang.getString("passwordCustomer"));
         String password = in.nextLine();
-        currentCustomer = userController.login(email,password);
+        currentCustomer = userController.login(email, password);
         menu();
     }
 
@@ -110,9 +114,9 @@ public class CustomerViewInfo {
     }
 
     private void menu() {
-        if(currentCustomer.getRole() == Role.ADMIN){
+        if (currentCustomer.getRole() == Role.ADMIN) {
             menuAdmin();
-        }else {
+        } else {
             menuUser();
         }
 
@@ -166,7 +170,7 @@ public class CustomerViewInfo {
         printAllCustomers(BubbleSort.sort(adminController.findAll()));
     }
 
-    private Customer findById(){
+    private Customer findById() {
         System.out.println(lang.getString("inputId"));
         return adminController.findById(in.nextLong());
     }
@@ -235,7 +239,7 @@ public class CustomerViewInfo {
                 break;
             case 13:
                 System.out.println(adminController.summaryOfPriceInsurances(currentCustomer));
-            break;
+                break;
             case 14:
                 chooseMenuLang();
                 break;
@@ -248,13 +252,13 @@ public class CustomerViewInfo {
     private void deleteOwnInsurance() {
         System.out.println(lang.getString("inputId"));
         Long id = in.nextLong();
-        adminController.deleteInsurance(currentCustomer,id);
+        adminController.deleteInsurance(currentCustomer, id);
     }
 
     private void addOwnInsurance() {
         System.out.println(lang.getString("inputId"));
         Long id = in.nextLong();
-        adminController.addInsurance(currentCustomer,id);
+        adminController.addInsurance(currentCustomer, id);
     }
 
     private void deleteInsurance() {
@@ -328,12 +332,12 @@ public class CustomerViewInfo {
     private void deleteOwnInsuranceUser() {
         System.out.println(lang.getString("inputId"));
         Long id = in.nextLong();
-        userController.deleteInsurance(currentCustomer,id);
+        userController.deleteInsurance(currentCustomer, id);
     }
 
     private void addOwnInsuranceUser() {
         System.out.println(lang.getString("inputId"));
         Long id = in.nextLong();
-        userController.addInsurance(currentCustomer,id);
+        userController.addInsurance(currentCustomer, id);
     }
 }

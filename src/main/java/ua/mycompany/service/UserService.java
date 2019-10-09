@@ -29,5 +29,5 @@ public interface UserService {
 
     ArrayList<Insurance> rangeByPayment(Customer customer, double startRange, double endRange);
 
-    double summaryOfPriceInsurances (Customer customer);
+    double summaryOfPriceInsurances(Customer customer);
 }
