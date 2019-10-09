@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
+import ua.mycompany.helper.validator.UserValidator;
 import ua.mycompany.repository.CustomerRepository;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ import java.util.Optional;
 public class AdminServiceImpl extends UserServiceImpl implements AdminService {
 
     @Autowired
-    public AdminServiceImpl(CustomerRepository customerRepository, InsuranceService insuranceService) {
-        super(customerRepository, insuranceService);
+    public AdminServiceImpl(CustomerRepository customerRepository, InsuranceService insuranceService, UserValidator userValidator) {
+        super(customerRepository, insuranceService, userValidator);
     }
 
     @Override
