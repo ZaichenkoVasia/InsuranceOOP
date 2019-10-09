@@ -3,10 +3,12 @@ package ua.mycompany.helper.validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.mycompany.domain.customer.Customer;
+import org.apache.log4j.Logger;
 
 @Component
 public class UserValidator {
 
+    private static final Logger logger = Logger.getLogger(UserValidator.class);
     private EmailValidator emailValidator;
     private NameValidator nameValidator;
     private PhoneValidator phoneValidator;
@@ -22,9 +24,15 @@ public class UserValidator {
     }
 
     public boolean validate(Customer customer) {
-        return emailValidator.validate(customer.getEmail()) &&
+        boolean validate = emailValidator.validate(customer.getEmail()) &&
                 nameValidator.validate(customer.getName()) &&
                 phoneValidator.validate(customer.getPhoneNumber()) &&
                 surnameValidator.validate(customer.getSurname());
+        if(validate){
+            logger.info("Customer is validate");
+        }else {
+            logger.error("Customer is NOT validate!");
+        }
+        return validate;
     }
 }
