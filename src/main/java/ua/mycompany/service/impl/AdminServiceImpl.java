@@ -6,7 +6,6 @@ import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.exception.UncorrectedIdRuntimeException;
 import ua.mycompany.repository.CustomerRepository;
 import ua.mycompany.service.AdminService;
-import ua.mycompany.service.InsuranceService;
 import ua.mycompany.util.validator.UserValidator;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.Optional;
 public class AdminServiceImpl extends UserServiceImpl implements AdminService {
 
     @Autowired
-    public AdminServiceImpl(CustomerRepository customerRepository, InsuranceService insuranceService, UserValidator userValidator) {
+    public AdminServiceImpl(CustomerRepository customerRepository, InsuranceServiceImpl insuranceService, UserValidator userValidator) {
         super(customerRepository, insuranceService, userValidator);
     }
 

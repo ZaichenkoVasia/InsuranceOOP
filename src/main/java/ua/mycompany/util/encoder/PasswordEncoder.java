@@ -27,24 +27,16 @@ public final class PasswordEncoder {
     }
 
     public static String generateSecurePassword(String password) {
-        String returnValue = null;
+        String returnValue;
         byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
-
         returnValue = Base64.getEncoder().encodeToString(securePassword);
-
         return returnValue;
     }
 
-    public static boolean verifycustomerPassword(String providedPassword,
-                                                 String securedPassword) {
-        boolean returnValue = false;
-
-        // Generate New secure password with the same salt
+    public static boolean verifycustomerPassword(String providedPassword, String securedPassword) {
+        boolean returnValue;
         String newSecurePassword = generateSecurePassword(providedPassword);
-
-        // Check if two passwords are equal
         returnValue = newSecurePassword.equalsIgnoreCase(securedPassword);
-
         return returnValue;
     }
 }

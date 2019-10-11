@@ -8,6 +8,7 @@ import ua.mycompany.controller.UserController;
 import ua.mycompany.domain.customer.Customer;
 import ua.mycompany.domain.customer.Role;
 import ua.mycompany.domain.order.Insurance;
+import ua.mycompany.exception.MyAbstractRuntimeException;
 import ua.mycompany.util.localization.UTF8Control;
 import ua.mycompany.util.sort.BubbleSort;
 import ua.mycompany.util.validator.ValidatorFactory;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-
-//import javax.validation.ConstraintViolation;
 
 @Component
 public class CustomerViewInfo {
@@ -44,12 +43,16 @@ public class CustomerViewInfo {
 
     protected void chooseMenuLang() {
 
-        System.out.println("\nChoose language/Оберіть мову");
-        System.out.println("English (1)");
-        System.out.println("Українська (2)");
-        int chooseLanguage = in.nextInt();
+        try {
+            System.out.println("\nChoose language/Оберіть мову");
+            System.out.println("English (1)");
+            System.out.println("Українська (2)");
+            int chooseLanguage = in.nextInt();
 
-        chooseLang(chooseLanguage);
+            chooseLang(chooseLanguage);
+        } catch (MyAbstractRuntimeException e) {
+            chooseMenuLang();
+        }
     }
 
     private void chooseLang(int chooseLanguage) {
@@ -62,55 +65,68 @@ public class CustomerViewInfo {
             } else
                 chooseMenuLang();
         } catch (Exception e) {
-            throw new IllegalArgumentException(lang.getString("uncorrectedArgument"));
+            System.out.println("Uncorrect value");
+            chooseLang(chooseLanguage);
         }
 
         loginOrRegister();
     }
 
     private void loginOrRegister() {
-        System.out.println("1 - " + lang.getString("registration"));
-        System.out.println("2 - " + lang.getString("login"));
-        int loginOrRegister = in.nextInt();
-        if (loginOrRegister == 1) {
-            register();
-        } else if (loginOrRegister == 2) {
-            loginCustomer();
-        } else {
+        try {
+            System.out.println("1 - " + lang.getString("registration"));
+            System.out.println("2 - " + lang.getString("login"));
+            int loginOrRegister = in.nextInt();
+            if (loginOrRegister == 1) {
+                register();
+            } else if (loginOrRegister == 2) {
+                loginCustomer();
+            } else {
+                loginOrRegister();
+            }
+        } catch (MyAbstractRuntimeException e) {
             loginOrRegister();
         }
     }
 
     private void loginCustomer() {
-        String email = writeFieldValidator("email");
+        try {
+            String email = writeFieldValidator("email");
 
-        System.out.println(lang.getString("passwordCustomer"));
-        String password = in.nextLine();
-        currentCustomer = userController.login(email, password);
-        menu();
+            System.out.println(lang.getString("passwordCustomer"));
+            String password = in.nextLine();
+            currentCustomer = userController.login(email, password);
+            menu();
+        } catch (MyAbstractRuntimeException e) {
+            loginCustomer();
+        }
     }
 
     private void register() {
-        String name = writeFieldValidator("name");
-        String surname = writeFieldValidator("surname");
-        String email = writeFieldValidator("email");
-        String phoneNumber = writeFieldValidator("phoneNumber");
-        String birthday = writeFieldValidator("date");
-        System.out.println(lang.getString("passwordCustomer"));
-        String password = in.nextLine();
+        try {
+            String name = writeFieldValidator("name");
+            String surname = writeFieldValidator("surname");
+            String email = writeFieldValidator("email");
+            String phoneNumber = writeFieldValidator("phoneNumber");
+            String birthday = writeFieldValidator("date");
+            System.out.println(lang.getString("passwordCustomer"));
+            String password = in.nextLine();
 
-        Customer customer = Customer.builder()
-                .withName(name)
-                .withSurname(surname)
-                .withBirthday(splitBirthday(birthday))
-                .withPhoneNumber(phoneNumber)
-                .withEmail(email)
-                .withPassword(password)
-                .build();
-        userController.register(customer);
-        System.out.println(lang.getString("customerCreated") + "\n");
-        currentCustomer = customer;
-        menu();
+            Customer customer = Customer.builder()
+                    .withName(name)
+                    .withSurname(surname)
+                    .withBirthday(splitBirthday(birthday))
+                    .withPhoneNumber(phoneNumber)
+                    .withEmail(email)
+                    .withPassword(password)
+                    .build();
+            userController.register(customer);
+            System.out.println(lang.getString("customerCreated") + "\n");
+            currentCustomer = customer;
+            menu();
+        } catch (MyAbstractRuntimeException e) {
+            register();
+        }
     }
 
     private void menu() {
@@ -176,77 +192,81 @@ public class CustomerViewInfo {
     }
 
     private void menuAdmin() {
-        System.out.println(lang.getString("menu"));
-        System.out.println("1 - " + lang.getString("viewCustomer"));
-        System.out.println("2 - " + lang.getString("sortCustomer"));
-        System.out.println("3 - " + lang.getString("inputId"));
-        System.out.println("4 - " + lang.getString("viewAllInsurance"));
-        System.out.println("5 - " + lang.getString("deleteInsurance"));
-        System.out.println("6 - " + lang.getString("viewOwnInsurance"));
-        System.out.println("7 - " + lang.getString("addOwnInsurance"));
-        System.out.println("8 - " + lang.getString("deleteOwnInsurance"));
-        System.out.println("9 - " + lang.getString("sortOwnInsurance"));
-        System.out.println("10 - " + lang.getString("rangeRiskOwnInsurance"));
-        System.out.println("11 - " + lang.getString("rangePriceOwnInsurance"));
-        System.out.println("12 - " + lang.getString("rangePaymentOwnInsurance"));
-        System.out.println("13 - " + lang.getString("sumOwnInsurance"));
-        System.out.println("14 - " + lang.getString("chooseLanguage"));
-        System.out.println("15 - " + lang.getString("exit"));
-
-        int choice;
         try {
-            choice = in.nextInt();
-        } catch (Exception e) {
-            throw new IllegalArgumentException(lang.getString("uncorrectedArgument"));
-        }
+            System.out.println(lang.getString("menu"));
+            System.out.println("1 - " + lang.getString("viewCustomer"));
+            System.out.println("2 - " + lang.getString("sortCustomer"));
+            System.out.println("3 - " + lang.getString("inputId"));
+            System.out.println("4 - " + lang.getString("viewAllInsurance"));
+            System.out.println("5 - " + lang.getString("deleteInsurance"));
+            System.out.println("6 - " + lang.getString("viewOwnInsurance"));
+            System.out.println("7 - " + lang.getString("addOwnInsurance"));
+            System.out.println("8 - " + lang.getString("deleteOwnInsurance"));
+            System.out.println("9 - " + lang.getString("sortOwnInsurance"));
+            System.out.println("10 - " + lang.getString("rangeRiskOwnInsurance"));
+            System.out.println("11 - " + lang.getString("rangePriceOwnInsurance"));
+            System.out.println("12 - " + lang.getString("rangePaymentOwnInsurance"));
+            System.out.println("13 - " + lang.getString("sumOwnInsurance"));
+            System.out.println("14 - " + lang.getString("chooseLanguage"));
+            System.out.println("15 - " + lang.getString("exit"));
 
-        switch (choice) {
-            case 1:
-                printAllCustomers(adminController.findAll());
-                break;
-            case 2:
-                sortCustomer();
-                break;
-            case 3:
-                System.out.println(findById());
-                break;
-            case 4:
-                printAllInsurance(insuranceController.findAll());
-                break;
-            case 5:
-                deleteInsurance();
-                break;
-            case 6:
-                printAllInsurance(adminController.findAllInsurance(currentCustomer));
-                break;
-            case 7:
-                addOwnInsurance();
-                break;
-            case 8:
-                deleteOwnInsurance();
-                break;
-            case 9:
-                printAllInsurance(adminController.sortInsuranceByRisk(currentCustomer));
-                break;
-            case 10:
-                printAllInsurance(adminController.rangeByRisk(currentCustomer, 0.05, 0.15));
-                break;
-            case 11:
-                printAllInsurance(adminController.rangeByPrice(currentCustomer, 3000, 20000));
-                break;
-            case 12:
-                printAllInsurance(adminController.rangeByPayment(currentCustomer, 1000, 100000));
-                break;
-            case 13:
-                System.out.println(adminController.summaryOfPriceInsurances(currentCustomer));
-                break;
-            case 14:
-                chooseMenuLang();
-                break;
-            case 15:
-                System.exit(0);
+            int choice;
+            try {
+                choice = in.nextInt();
+            } catch (Exception e) {
+                throw new IllegalArgumentException(lang.getString("uncorrectedArgument"));
+            }
+
+            switch (choice) {
+                case 1:
+                    printAllCustomers(adminController.findAll());
+                    break;
+                case 2:
+                    sortCustomer();
+                    break;
+                case 3:
+                    System.out.println(findById());
+                    break;
+                case 4:
+                    printAllInsurance(insuranceController.findAll());
+                    break;
+                case 5:
+                    deleteInsurance();
+                    break;
+                case 6:
+                    printAllInsurance(adminController.findAllInsurance(currentCustomer));
+                    break;
+                case 7:
+                    addOwnInsurance();
+                    break;
+                case 8:
+                    deleteOwnInsurance();
+                    break;
+                case 9:
+                    printAllInsurance(adminController.sortInsuranceByRisk(currentCustomer));
+                    break;
+                case 10:
+                    printAllInsurance(adminController.rangeByRisk(currentCustomer, 0.05, 0.15));
+                    break;
+                case 11:
+                    printAllInsurance(adminController.rangeByPrice(currentCustomer, 3000, 20000));
+                    break;
+                case 12:
+                    printAllInsurance(adminController.rangeByPayment(currentCustomer, 1000, 100000));
+                    break;
+                case 13:
+                    System.out.println(adminController.summaryOfPriceInsurances(currentCustomer));
+                    break;
+                case 14:
+                    chooseMenuLang();
+                    break;
+                case 15:
+                    System.exit(0);
+            }
+            menuAdmin();
+        } catch (MyAbstractRuntimeException e) {
+            menuAdmin();
         }
-        menuAdmin();
     }
 
     private void deleteOwnInsurance() {
@@ -268,65 +288,69 @@ public class CustomerViewInfo {
     }
 
     private void menuUser() {
-        System.out.println(lang.getString("menu"));
-        System.out.println("1 - " + lang.getString("currentId"));
-        System.out.println("2 - " + lang.getString("viewAllInsurance"));
-        System.out.println("3 - " + lang.getString("viewOwnInsurance"));
-        System.out.println("4 - " + lang.getString("addOwnInsurance"));
-        System.out.println("5 - " + lang.getString("deleteOwnInsurance"));
-        System.out.println("6 - " + lang.getString("sortOwnInsurance"));
-        System.out.println("7 - " + lang.getString("rangeRiskOwnInsurance"));
-        System.out.println("8 - " + lang.getString("rangePriceOwnInsurance"));
-        System.out.println("9 - " + lang.getString("rangePaymentOwnInsurance"));
-        System.out.println("10 - " + lang.getString("sumOwnInsurance"));
-        System.out.println("11 - " + lang.getString("chooseLanguage"));
-        System.out.println("12 - " + lang.getString("exit"));
-
-        int choice;
         try {
-            choice = in.nextInt();
-        } catch (Exception e) {
-            throw new IllegalArgumentException(lang.getString("uncorrectedArgument"));
-        }
+            System.out.println(lang.getString("menu"));
+            System.out.println("1 - " + lang.getString("currentId"));
+            System.out.println("2 - " + lang.getString("viewAllInsurance"));
+            System.out.println("3 - " + lang.getString("viewOwnInsurance"));
+            System.out.println("4 - " + lang.getString("addOwnInsurance"));
+            System.out.println("5 - " + lang.getString("deleteOwnInsurance"));
+            System.out.println("6 - " + lang.getString("sortOwnInsurance"));
+            System.out.println("7 - " + lang.getString("rangeRiskOwnInsurance"));
+            System.out.println("8 - " + lang.getString("rangePriceOwnInsurance"));
+            System.out.println("9 - " + lang.getString("rangePaymentOwnInsurance"));
+            System.out.println("10 - " + lang.getString("sumOwnInsurance"));
+            System.out.println("11 - " + lang.getString("chooseLanguage"));
+            System.out.println("12 - " + lang.getString("exit"));
 
-        switch (choice) {
-            case 1:
-                System.out.println(userController.findById(currentCustomer.getId()));
-                break;
-            case 2:
-                printAllInsurance(insuranceController.findAll());
-                break;
-            case 3:
-                printAllInsurance(userController.findAllInsurance(currentCustomer));
-                break;
-            case 4:
-                addOwnInsuranceUser();
-                break;
-            case 5:
-                deleteOwnInsuranceUser();
-                break;
-            case 6:
-                printAllInsurance(userController.sortInsuranceByRisk(currentCustomer));
-                break;
-            case 7:
-                printAllInsurance(userController.rangeByRisk(currentCustomer, 0.05, 0.15));
-                break;
-            case 8:
-                printAllInsurance(userController.rangeByPrice(currentCustomer, 3000, 20000));
-                break;
-            case 9:
-                printAllInsurance(userController.rangeByPayment(currentCustomer, 1000, 100000));
-                break;
-            case 10:
-                System.out.println(userController.summaryOfPriceInsurances(currentCustomer));
-                break;
-            case 11:
-                chooseMenuLang();
-                break;
-            case 12:
-                System.exit(0);
+            int choice;
+            try {
+                choice = in.nextInt();
+            } catch (Exception e) {
+                throw new IllegalArgumentException(lang.getString("uncorrectedArgument"));
+            }
+
+            switch (choice) {
+                case 1:
+                    System.out.println(userController.findById(currentCustomer.getId()));
+                    break;
+                case 2:
+                    printAllInsurance(insuranceController.findAll());
+                    break;
+                case 3:
+                    printAllInsurance(userController.findAllInsurance(currentCustomer));
+                    break;
+                case 4:
+                    addOwnInsuranceUser();
+                    break;
+                case 5:
+                    deleteOwnInsuranceUser();
+                    break;
+                case 6:
+                    printAllInsurance(userController.sortInsuranceByRisk(currentCustomer));
+                    break;
+                case 7:
+                    printAllInsurance(userController.rangeByRisk(currentCustomer, 0.05, 0.15));
+                    break;
+                case 8:
+                    printAllInsurance(userController.rangeByPrice(currentCustomer, 3000, 20000));
+                    break;
+                case 9:
+                    printAllInsurance(userController.rangeByPayment(currentCustomer, 1000, 100000));
+                    break;
+                case 10:
+                    System.out.println(userController.summaryOfPriceInsurances(currentCustomer));
+                    break;
+                case 11:
+                    chooseMenuLang();
+                    break;
+                case 12:
+                    System.exit(0);
+            }
+            menuUser();
+        } catch (MyAbstractRuntimeException e) {
+            menuUser();
         }
-        menuUser();
     }
 
     private void deleteOwnInsuranceUser() {
