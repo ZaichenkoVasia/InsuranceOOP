@@ -50,8 +50,10 @@ public class UserServiceImpl implements UserService {
     public Customer login(String email, String password) {
         String encodePassword = PasswordEncoder.generateSecurePassword(password);
 
-        Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new UncorrectedLoginRuntimeException("Email is uncorrected"));
+        Customer customer = customerRepository.findByEmail(email).get();
+        if (customer == null) {
+            throw new UncorrectedLoginRuntimeException("Email is uncorrected");
+        }
 
         String CustomerPassword = customer.getPassword();
 
@@ -68,7 +70,10 @@ public class UserServiceImpl implements UserService {
             throw new UncorrectedIdRuntimeException("Id of customer must be > 0");
         }
         Optional<Customer> customerFindById = customerRepository.findById(id);
-        return customerFindById.orElseThrow(() -> new UncorrectedIdRuntimeException("Id Tax must be correct"));
+        if (customerFindById == null) {
+            throw new UncorrectedLoginRuntimeException("Email is uncorrected");
+        }
+        return customerFindById.get();
     }
 
     @Override
